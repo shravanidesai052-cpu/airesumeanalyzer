@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ResumeIQ — AI Resume Analyzer</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">Resume<span>IQ</span></div>
+    <nav class="nav-links">
+      <a href="#how-it-works">How it works</a>
+      <a href="#features">Features</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">✦ Powered by Gemini AI</div>
+      <h1>Your resume,<br/><em>analyzed in seconds</em></h1>
+      <p class="hero-sub">Upload your resume and get actionable feedback — ATS score, skill gaps, bullet rewrites, and job match analysis. No fluff, just results.</p>
+    </div>
+    <div class="hero-visual">
+      <div class="score-preview">
+        <div class="score-ring">
+          <svg viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#1a1a2e" stroke-width="8"/>
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#6C63FF" stroke-width="8"
+              stroke-dasharray="251" stroke-dashoffset="62" stroke-linecap="round"
+              transform="rotate(-90 60 60)"/>
+          </svg>
+          <div class="score-num">76</div>
+        </div>
+        <div class="score-label">ATS Score</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN APP -->
+  <main class="app-container">
+
+    <!-- UPLOAD PANEL -->
+    <section class="panel upload-panel">
+      <h2>1. Upload or Paste Your Resume</h2>
+      <label class="file-upload-label" for="resumeFile">Upload a PDF resume</label>
+      <input id="resumeFile" type="file" accept=".pdf" onchange="handleResumeFile(event)" />
+      <div id="resumeFileName" class="file-name" aria-live="polite"></div>
+      <textarea id="resumeText" placeholder="Paste your resume text here or upload a PDF to extract it automatically...
+
+Example:
+John Doe | john@email.com | LinkedIn
+
+EXPERIENCE
+Software Engineer — Acme Corp (2021–2024)
+• Built REST APIs using Node.js
+• Reduced load time by 40%
+
+SKILLS
+JavaScript, Python, React, SQL
+
+EDUCATION
+B.Tech Computer Science — 2021"></textarea>
+
+      <h2 style="margin-top:24px">2. Paste Job Description <span class="optional">(optional)</span></h2>
+      <textarea id="jobDesc" placeholder="Paste the job description you're targeting...
+
+Example:
+We are looking for a Senior Software Engineer with 3+ years experience in React, Node.js, and AWS. Must have experience with CI/CD pipelines and agile methodology..."></textarea>
+
+      <div class="target-role-row">
+        <label>Target Role</label>
+        <select id="targetRole">
+          <option value="Software Engineer">Software Engineer</option>
+          <option value="AI Engineer">AI Engineer</option>
+          <option value="ML Engineer">ML Engineer</option>
+          <option value="AIML Engineer">AIML Engineer</option>
+          <option value="Data Scientist">Data Scientist</option>
+          <option value="Product Manager">Product Manager</option>
+          <option value="UI/UX Designer">UI/UX Designer</option>
+          <option value="Marketing Manager">Marketing Manager</option>
+          <option value="Business Analyst">Business Analyst</option>
+          <option value="DevOps Engineer">DevOps Engineer</option>
+          <option value="Full Stack Developer">Full Stack Developer</option>
+        </select>
+      </div>
+
+      <button id="analyzeBtn" class="btn-primary" onclick="analyzeResume()">
+        <span id="btnText">Analyze My Resume →</span>
+        <span id="btnLoader" class="hidden">Analyzing...</span>
+      </button>
+    </section>
+
+    <!-- RESULTS PANEL -->
+    <section class="panel results-panel" id="resultsPanel" style="display:none">
+
+      <!-- ATS Score -->
+      <div class="result-block score-block">
+        <div class="score-display">
+          <div class="big-score" id="atsScore">--</div>
+          <div class="score-meta">
+            <div class="score-title">ATS Score</div>
+            <div class="score-bar-wrap"><div class="score-bar" id="atsBar"></div></div>
+            <div class="score-desc" id="atsVerdict"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('overview', this)">Overview</button>
+        <button class="tab" onclick="switchTab('sections', this)">Section Feedback</button>
+        <button class="tab" onclick="switchTab('keywords', this)">Keywords</button>
+        <button class="tab" onclick="switchTab('rewrites', this)">Rewrites</button>
+        <button class="tab" onclick="switchTab('jobmatch', this)">Job Match</button>
+        <button class="tab" onclick="switchTab('vacancies', this)">Live Vacancies</button>
+      </div>
+
+      <div class="tab-content" id="tab-overview"></div>
+      <div class="tab-content hidden" id="tab-sections"></div>
+      <div class="tab-content hidden" id="tab-keywords"></div>
+      <div class="tab-content hidden" id="tab-rewrites"></div>
+      <div class="tab-content hidden" id="tab-jobmatch"></div>
+      <div class="tab-content hidden" id="tab-vacancies"></div>
+
+    </section>
+  </main>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section" id="how-it-works">
+    <h2>How ResumeIQ works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-icon">📋</div>
+        <div class="step-text">
+          <strong>Paste your resume</strong>
+          <p>Copy-paste your resume text. Add a job description for targeted analysis.</p>
+        </div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <div class="step-icon">🤖</div>
+        <div class="step-text">
+          <strong>AI analysis runs</strong>
+          <p>Gemini AI reads your resume like a hiring manager and ATS system would.</p>
+        </div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <div class="step-icon">✅</div>
+        <div class="step-text">
+          <strong>Get actionable feedback</strong>
+          <p>Score, gaps, rewrites, and specific improvements — ready to act on.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features-section" id="features">
+    <h2>What you get</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="f-icon">🎯</div>
+        <h3>ATS Score</h3>
+        <p>See how well your resume passes automated screening systems used by 90% of large companies.</p>
+      </div>
+      <div class="feature-card">
+        <div class="f-icon">🔍</div>
+        <h3>Keyword Gap Analysis</h3>
+        <p>Find out which industry keywords and skills you're missing for your target role.</p>
+      </div>
+      <div class="feature-card">
+        <div class="f-icon">✏️</div>
+        <h3>Bullet Rewrites</h3>
+        <p>AI rewrites your weakest bullet points using strong action verbs and quantifiable results.</p>
+      </div>
+      <div class="feature-card">
+        <div class="f-icon">📊</div>
+        <h3>Job Match %</h3>
+        <p>Paste any job description and see exactly how well your resume matches that role.</p>
+      </div>
+      <div class="feature-card">
+        <div class="f-icon">🧱</div>
+        <h3>Section Feedback</h3>
+        <p>Detailed critique of each section — Summary, Experience, Skills, Education.</p>
+      </div>
+      <div class="feature-card">
+        <div class="f-icon">💼</div>
+        <h3>Live Vacancies</h3>
+        <p>Instantly search and look at open job listings matching your optimized profile metrics.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div>Built with Gemini AI · ResumeIQ 2026</div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.10.147/pdf.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
