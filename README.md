@@ -29,5 +29,5 @@ ResumeIQ is an intelligent, high-performance web application designed to optimiz
 
 ### 1. Clone the Repository
 ```bash
-git clone [https://github.com/YOUR-USERNAME/ResumeIQ.git](https://github.com/YOUR-USERNAME/ResumeIQ.git)
+git clone [https://github.com/shravanidesai052-cpu/ResumeIQ.git](https://github.com/shravanidesai052-cpu/ResumeIQ.git)
 cd ResumeIQ
