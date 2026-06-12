@@ -3,11 +3,11 @@
 //  Uses Gemini API (gemini-2.5-flash) & JSearch API for Live Vacancies
 // ================================================================
 
-const GEMINI_API_KEY = "AIzaSyC-8R6yFLXYV9NuKWQGCuUeSCjzjli_FLM";
+const GEMINI_API_KEY = "Enter your Gemini API Key";
 const MODEL_NAME = "gemini-2.5-flash";
 
 // ⚠️ IMPORTANT: Replace with your actual RapidAPI Key from your JSearch account subscription
-const RAPIDAPI_KEY = "d56486b229mshac147b3fccd2aa3p1dc8a4jsn176ad541c154";  // <-- REPLACE THIS WITH YOUR RAPIDAPI KEY
+const RAPIDAPI_KEY = "Enter your RAPIDAPI Key";  // <-- REPLACE THIS WITH YOUR RAPIDAPI KEY
 
 const PDFJS_MODULE_CDN = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.149/pdf.min.mjs";
 const PDFJS_WORKER_SRC = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.149/pdf.worker.min.mjs";
